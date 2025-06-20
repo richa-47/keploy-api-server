@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head><title>Users</title></head>
+<body>
+  <h1>User List</h1>
+  <ul id="users"></ul>
+
+  <h2>Add User</h2>
+  <input id="name" placeholder="Name">
+  <input id="email" placeholder="Email">
+  <input id="age" placeholder="Age" type="number">
+  <button onclick="addUser()">Add</button>
+
+  <script>
+    const api = 'http://localhost:3000/api/users'
+
+    async function loadUsers() {
+      const res = await fetch(api)
+      const users = await res.json()
+      document.getElementById('users').innerHTML =
+        users.map(u => `<li>${u.name} (${u.email})</li>`).join('')
+    }
+
+    async function addUser() {
+      const name = document.getElementById('name').value
+      const email = document.getElementById('email').value
+      const age = document.getElementById('age').value
+      await fetch(api, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, age })
+      })
+      loadUsers()
+    }
+
+    loadUsers()
+  </script>
+</body>
+</html>
