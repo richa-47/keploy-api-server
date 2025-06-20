@@ -6,7 +6,7 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-mongoose.connect('mongodb+srv://richakumarirk03:1aMjveSJ1TSUFMBH@cluster0.yootsq8.mongodb.net/', {
+mongoose.connect('process.env.MONGO_URI', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => console.log('MongoDB Connected'))
